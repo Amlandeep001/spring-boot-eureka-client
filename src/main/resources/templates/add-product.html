@@ -1,0 +1,69 @@
+<html>
+
+<head>
+	<script>
+		function preventBack() {
+			window.history.forward();
+		}
+
+		setTimeout("preventBack()", 0);
+		window.onunload = function () {
+			null
+		};
+	</script>
+	<style>
+		form {
+			width: 400px;
+			margin: 60px auto;
+			border: 1px solid #dedede;
+			padding: 15px;
+		}
+
+		label {
+			display: inline-block;
+			width: 150px;
+		}
+
+		input {
+			display: inline-block;
+			width: 200px;
+			height: 30px;
+		}
+		span{
+			display:block;
+			color:red;
+			font-weight: 300;
+			padding-left: 150px;
+		}
+	</style>
+</head>
+
+<body>
+	<h2 align="center">Add a new Product</h2>
+	<form action="#" th:action="@{/saveProduct}" th:object="${product}" method="post">
+		<label for="id">Id</label>
+		<input type="text" th:field="*{id}" id="id" placeholder="Id">
+		<span th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></span></br></br>
+		<label for="productname">Product Name</label>
+		<input type="text" th:field="*{productname}" id="productname" placeholder="Product Name">
+		<span th:if="${#fields.hasErrors('productname')}" th:errors="*{productname}"></span></br></br>
+		<label for="quantity">Quantity</label>
+		<input type="text" th:field="*{quantity}" id="quantity" placeholder="Quantity">
+		<span th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></span></br></br>
+		<label for="brand">Brand</label>
+		<input type="text" th:field="*{brand}" id="brand" placeholder="Brand">
+		<span th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></span></br></br>
+		<label for="price">Price</label>
+		<input type="text" th:field="*{price}" id="price" placeholder="Price">
+		<span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span></br></br>
+		<label for="expiryDate">Expiry Date</label>
+		<input type="date" th:field="*{expiryDate}" id="expiryDate" placeholder="Expiry Date">
+		<span th:if="${#fields.hasErrors('expiryDate')}" th:errors="*{expiryDate}"></span></br></br>
+		<label for="manufacturedDate">Manufactured Date</label>
+		<input type="date" th:field="*{manufacturedDate}" id="manufacturedDate" placeholder="Manufactured Date">
+		<span th:if="${#fields.hasErrors('manufacturedDate')}" th:errors="*{manufacturedDate}"></span></br></br>
+		<label></label><input type="submit" value="Add Product">
+	</form>
+</body>
+
+</html>

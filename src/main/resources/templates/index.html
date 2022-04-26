@@ -1,0 +1,57 @@
+<script>
+	function preventBack() {
+		window.history.forward();
+	}
+
+	setTimeout("preventBack()", 0);
+	window.onunload = function () {
+		null
+	};
+</script>
+<h2>Welcome to products page!</h2>
+<div th:switch="${products}">
+	<div th:case="*">
+		<h2>Products</h2>
+		<style>
+			table,
+			th,
+			td {
+				padding: 10px;
+				border: 1px solid black;
+				border-collapse: collapse;
+			}
+		</style>
+		<table th:if="${not #lists.isEmpty(products)}">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Product Name</th>
+					<th>Quantity</th>
+					<th>Brand</th>
+					<th>Price</th>
+					<th>Expiry Date</th>
+					<th>Manufactured Date</th>
+					<th>Edit</th>
+					<th>Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="product : ${products}">
+					<td th:text="${product.id}"></td>
+					<td th:text="${product.productname}"></td>
+					<td th:text="${product.quantity}"></td>
+					<td th:text="${product.brand}"></td>
+					<td th:text="${product.price}"></td>
+					<td th:text="${product.expiryDate}"></td>
+					<td th:text="${product.manufacturedDate}"></td>
+					<td><a th:href="@{/edit/{id}(id=${product.id})}">Edit</a></td>
+					<td><a th:href="@{/delete/{id}(id=${product.id})}">Delete</a></td>
+				</tr>
+			</tbody>
+		</table>
+		<div th:if="${#lists.isEmpty(products)}">
+			<p>No products yet!</p>
+		</div>
+		<p><a href="/addProduct">Add a new product</a></p>
+	</div>
+</div>
