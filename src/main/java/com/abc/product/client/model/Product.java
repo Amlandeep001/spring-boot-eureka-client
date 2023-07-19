@@ -3,18 +3,17 @@ package com.abc.product.client.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import javax.validation.Valid;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
-
 import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
@@ -24,17 +23,18 @@ import lombok.experimental.FieldDefaults;
  */
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Product {
+public class Product
+{
 
 	@Valid
-	@Min(value = 100000, message ="id must be 6 digit")
-	@Max(value = 999999, message ="id must be 6 digit")
+	@Min(value = 100000, message = "id must be 6 digit")
+	@Max(value = 999999, message = "id must be 6 digit")
 	Long id;
 
 	@Valid()
 	@NotBlank(message = "Product Name can't be blank")
 	@NotNull(message = "Product Name can't be null")
-	@Size(max=20, message="Product Name can't be more than 20 characters")
+	@Size(max = 20, message = "Product Name can't be more than 20 characters")
 	String productname;
 
 	@Valid()
@@ -45,13 +45,13 @@ public class Product {
 	@Valid()
 	@NotBlank(message = "Brand can't be blank")
 	@NotNull(message = "Brand can't be null")
-	@Size(max=16, message="Brand can't be more than 16 characters")
+	@Size(max = 16, message = "Brand can't be more than 16 characters")
 	String brand;
 
 	@Valid()
 	@NotNull(message = "Price can't be null")
 	@DecimalMin(value = "0.99", inclusive = false)
-    @Digits(integer=3, fraction=2)
+	@Digits(integer = 3, fraction = 2)
 	BigDecimal price;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")

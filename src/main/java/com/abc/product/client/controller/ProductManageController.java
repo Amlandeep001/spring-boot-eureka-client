@@ -3,8 +3,6 @@ package com.abc.product.client.controller;
 import java.util.Arrays;
 import java.util.Random;
 
-import javax.validation.Valid;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.abc.product.client.model.Product;
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -25,39 +24,47 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Controller
 @Slf4j
-public class ProductManageController {
+public class ProductManageController
+{
 
 	private final RestTemplate restTemplate;
 
-	ProductManageController(RestTemplate restTemplate) {
+	ProductManageController(RestTemplate restTemplate)
+	{
 		this.restTemplate = restTemplate;
-
 	}
 
 	@GetMapping("/")
-	public String loadHomePage(Model model) {
+	public String loadHomePage(Model model)
+	{
 		return showProductList(model);
 	}
 
 	@GetMapping("/existingProducts")
-	public String showProductList(Model model) {
+	public String showProductList(Model model)
+	{
 		Product[] products = restTemplate.getForObject("http://PRODUCT-SERVICE/products", Product[].class);
 		model.addAttribute("products", Arrays.asList(products));
 		return "index";
-
 	}
 
 	@GetMapping("/addProduct")
-	public String showAdditionForm(Product product) {
+	public String showAdditionForm(Product product)
+	{
 		return "add-product";
 	}
 
 	@PostMapping("/saveProduct")
-	public String saveProduct(@Valid @ModelAttribute("product") Product product, BindingResult result, Model model) {
-		if (result.hasErrors()) {
+	public String saveProduct(@Valid @ModelAttribute("product") Product product, BindingResult result, Model model)
+	{
+		if(result.hasErrors())
+		{
 			return "add-product";
-		} else {
-			if (product.getId() == null) {
+		}
+		else
+		{
+			if(product.getId() == null)
+			{
 				Random r = new Random();
 				long id = r.nextInt(99999) + 100000;
 				log.info("No id came through input, hence created the same, id: {}, id length: {}", id, String.valueOf(id).length());
@@ -70,7 +77,8 @@ public class ProductManageController {
 	}
 
 	@GetMapping("/edit/{id}")
-	public String showUpdateForm(@PathVariable("id") long id, Model model) {
+	public String showUpdateForm(@PathVariable("id") long id, Model model)
+	{
 		Product product = restTemplate.getForObject("http://PRODUCT-SERVICE/products/" + id, Product.class);
 		log.info("Product requested for an update is: {}", product.toString());
 		model.addAttribute("product", product);
@@ -79,13 +87,17 @@ public class ProductManageController {
 
 	@PostMapping("/update/{id}")
 	public String updateProduct(@PathVariable("id") long id, @Valid Product product, BindingResult result,
-			Model model) {
+			Model model)
+	{
 		log.info("inside update product call, id: {} & product name: {}", id, product.getProductname());
-		if (result.hasErrors()) {
+		if(result.hasErrors())
+		{
 			log.error("some error happened, errors: {}", result.getAllErrors());
 			product.setId(id);
 			return "update-product";
-		} else {
+		}
+		else
+		{
 			Product updatedProduct = restTemplate.postForObject("http://PRODUCT-SERVICE/update/" + id, product, Product.class);
 			log.info("Updated Product: {}", updatedProduct.toString());
 			return "redirect:/existingProducts";
@@ -93,7 +105,8 @@ public class ProductManageController {
 	}
 
 	@GetMapping("/delete/{id}")
-	public String deleteProduct(@PathVariable("id") long id, Model model) {
+	public String deleteProduct(@PathVariable("id") long id, Model model)
+	{
 		log.info("inside delete product call, id: {} ", id);
 		restTemplate.getForObject("http://PRODUCT-SERVICE/delete/" + id, Boolean.class);
 		return "redirect:/existingProducts";
