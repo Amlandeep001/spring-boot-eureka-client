@@ -25,7 +25,6 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Product
 {
-
 	@Valid
 	@Min(value = 100000, message = "id must be 6 digit")
 	@Max(value = 999999, message = "id must be 6 digit")
@@ -61,5 +60,4 @@ public class Product
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Valid()
 	LocalDate manufacturedDate;
-
 }

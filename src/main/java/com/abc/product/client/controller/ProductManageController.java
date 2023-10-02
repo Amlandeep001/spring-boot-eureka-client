@@ -26,7 +26,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ProductManageController
 {
-
 	private final RestTemplate restTemplate;
 
 	ProductManageController(RestTemplate restTemplate)
@@ -154,5 +153,4 @@ public class ProductManageController
 	 * 
 	 * return isRemoved; }
 	 */
-
 }
