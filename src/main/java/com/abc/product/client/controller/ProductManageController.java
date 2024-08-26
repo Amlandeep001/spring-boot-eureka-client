@@ -54,7 +54,7 @@ public class ProductManageController
 	}
 
 	@PostMapping("/saveProduct")
-	public String saveProduct(@Valid @ModelAttribute("product") Product product, BindingResult result, Model model)
+	public String saveProduct(@Valid @ModelAttribute Product product, BindingResult result, Model model)
 	{
 		if(result.hasErrors())
 		{
@@ -76,7 +76,7 @@ public class ProductManageController
 	}
 
 	@GetMapping("/edit/{id}")
-	public String showUpdateForm(@PathVariable("id") long id, Model model)
+	public String showUpdateForm(@PathVariable long id, Model model)
 	{
 		Product product = restTemplate.getForObject("http://PRODUCT-SERVICE/products/" + id, Product.class);
 		log.info("Product requested for an update is: {}", product.toString());
@@ -85,7 +85,7 @@ public class ProductManageController
 	}
 
 	@PostMapping("/update/{id}")
-	public String updateProduct(@PathVariable("id") long id, @Valid Product product, BindingResult result,
+	public String updateProduct(@PathVariable long id, @Valid Product product, BindingResult result,
 			Model model)
 	{
 		log.info("inside update product call, id: {} & product name: {}", id, product.getProductname());
@@ -104,7 +104,7 @@ public class ProductManageController
 	}
 
 	@GetMapping("/delete/{id}")
-	public String deleteProduct(@PathVariable("id") long id, Model model)
+	public String deleteProduct(@PathVariable long id, Model model)
 	{
 		log.info("inside delete product call, id: {} ", id);
 		restTemplate.getForObject("http://PRODUCT-SERVICE/delete/" + id, Boolean.class);
