@@ -107,7 +107,7 @@ public class ProductManageController
 	public String deleteProduct(@PathVariable long id, Model model)
 	{
 		log.info("inside delete product call, id: {} ", id);
-		restTemplate.getForObject("http://PRODUCT-SERVICE/delete/" + id, Boolean.class);
+		restTemplate.delete("http://PRODUCT-SERVICE/delete/" + id, Boolean.class);
 		return "redirect:/existingProducts";
 	}
 	/*
