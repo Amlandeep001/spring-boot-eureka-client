@@ -31,8 +31,7 @@ public class Product
 	Long id;
 
 	@Valid()
-	@NotBlank(message = "Product Name can't be blank")
-	@NotNull(message = "Product Name can't be null")
+	@NotBlank(message = "Product Name must not be null or blank")
 	@Size(max = 20, message = "Product Name can't be more than 20 characters")
 	String productname;
 
@@ -42,8 +41,7 @@ public class Product
 	Integer quantity;
 
 	@Valid()
-	@NotBlank(message = "Brand can't be blank")
-	@NotNull(message = "Brand can't be null")
+	@NotBlank(message = "Brand must not be null or blank")
 	@Size(max = 16, message = "Brand can't be more than 16 characters")
 	String brand;
 
